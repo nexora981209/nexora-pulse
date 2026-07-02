@@ -23,6 +23,10 @@ import BudgetPacing from './components/BudgetPacing'
 import ObjectiveAnalysis from './components/ObjectiveAnalysis'
 import ScaleCalculator from './components/ScaleCalculator'
 import WhatsAppReport from './components/WhatsAppReport'
+import Onboarding from './components/Onboarding'
+import ProgressGuide from './components/ProgressGuide'
+
+const ONBOARDING_KEY = 'nexora-pulse-onboarding-done'
 
 export default function App() {
   const [metrics, setMetrics] = useState<MetricValues>(CURRENT_METRICS)
@@ -32,14 +36,29 @@ export default function App() {
   const [showExportMenu, setShowExportMenu] = useState(false)
   const [pdfLoading, setPdfLoading] = useState(false)
   const [history, setHistory] = useState<HistoryEntry[]>([])
-  const [showClientView, setShowClientView] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(false)
   const [savedToast, setSavedToast] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(false)
+
+  // Progress tracking
+  const [hasViewedAlerts, setHasViewedAlerts] = useState(false)
+  const [hasDownloaded, setHasDownloaded] = useState(false)
 
   const healthScore = calculateHealthScore(metrics)
   const diagnoses = generateDiagnosis(metrics)
   const recommendations = generateRecommendations(metrics)
 
-  useEffect(() => { setHistory(loadHistory()) }, [])
+  useEffect(() => {
+    setHistory(loadHistory())
+    const done = localStorage.getItem(ONBOARDING_KEY)
+    if (!done) setShowOnboarding(true)
+  }, [])
+
+  function handleOnboardingStart() {
+    localStorage.setItem(ONBOARDING_KEY, '1')
+    setShowOnboarding(false)
+    setShowImporter(true)
+  }
 
   function refreshHistory() { setHistory(loadHistory()) }
 
@@ -61,6 +80,7 @@ export default function App() {
     setPdfLoading(true)
     await generatePDF(metrics, campaigns, isRealData)
     setPdfLoading(false)
+    setHasDownloaded(true)
   }
 
   function handleSaveSnapshot() {
@@ -76,10 +96,29 @@ export default function App() {
     setIsRealData(true)
   }
 
-  if (showClientView) {
-    return <ClientView metrics={metrics} campaigns={campaigns} onClose={() => setShowClientView(false)} />
+  // Onboarding screen
+  if (showOnboarding) {
+    return <Onboarding onStart={handleOnboardingStart} />
   }
 
+  // Client view (default) — simplified, friendly
+  if (!showAdvanced) {
+    return (
+      <ClientView
+        metrics={metrics}
+        campaigns={campaigns}
+        isRealData={isRealData}
+        onUploadCSV={() => {
+          setShowAdvanced(true)
+          setShowImporter(true)
+        }}
+        onAdvancedView={() => setShowAdvanced(true)}
+        onDownloaded={() => setHasDownloaded(true)}
+      />
+    )
+  }
+
+  // Advanced / technical dashboard
   return (
     <div className="min-h-screen bg-[#0f0f14]">
       {savedToast && (
@@ -94,7 +133,7 @@ export default function App() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">N</div>
             <div>
               <h1 className="text-white font-bold text-base leading-none">Nexora Pulse</h1>
-              <p className="text-gray-500 text-xs mt-0.5">Meta Ads Intelligence Dashboard</p>
+              <p className="text-gray-500 text-xs mt-0.5">Vista avanzada</p>
             </div>
           </div>
 
@@ -118,16 +157,15 @@ export default function App() {
               {pdfLoading ? '⏳ Generando...' : '📄 PDF'}
             </button>
             <button onClick={handleSaveSnapshot} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 px-3 py-1.5 rounded-full font-medium transition-colors">💾 Snapshot</button>
-            <button onClick={() => setShowClientView(true)} className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-full font-medium transition-colors">👤 Modo cliente</button>
-            <div className="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
-              En vivo
-            </div>
+            <button onClick={() => setShowAdvanced(false)} className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-full font-medium transition-colors">← Vista cliente</button>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-8" onClick={() => setShowExportMenu(false)}>
+
+        {/* Progress guide */}
+        <ProgressGuide hasData={isRealData} hasViewedAlerts={hasViewedAlerts} hasDownloaded={hasDownloaded} />
 
         {showImporter && (
           <section>
@@ -193,7 +231,7 @@ export default function App() {
         <WhatsAppReport metrics={metrics} campaigns={campaigns} />
 
         {/* 9. Diagnostic + AB */}
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-2 gap-6" onClick={() => setHasViewedAlerts(true)}>
           <DiagnosticPanel diagnoses={diagnoses} />
           <ABComparator a={AD_VARIANTS[0]} b={AD_VARIANTS[1]} />
         </div>
