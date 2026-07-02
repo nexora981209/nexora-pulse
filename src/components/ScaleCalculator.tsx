@@ -19,7 +19,6 @@ export default function ScaleCalculator({ metrics }: Props) {
   const currentProfit = currentRevenue * (margin / 100) - currentBudget
   const profitDelta = projectedProfit - currentProfit
 
-  const minRoasToBreakEven = breakEvenRoas
   const minRoasToMaintainProfit = (currentProfit + targetBudget) / (targetBudget * (margin / 100))
   const isSafeToScale = currentRoas >= minRoasToMaintainProfit * 1.1
 
