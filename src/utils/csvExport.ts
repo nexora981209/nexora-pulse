@@ -1,4 +1,5 @@
-import { MetricValues, Campaign, METRICS } from '../data/mockData'
+import type { MetricValues, Campaign } from '../data/mockData'
+import { METRICS } from '../data/mockData'
 
 function toCSV(rows: string[][]): string {
   return rows.map((r) => r.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n')

@@ -132,6 +132,13 @@ export function importMetaCSV(text: string): ImportResult {
       cpa,
       conversions,
       health: detectHealth(roas, ctr, cpa),
+      objective: 'conversions',
+      monthlyBudget: (budget || Math.round(spend * 1.1)) * 30,
+      daysElapsed: 15,
+      daysTotal: 30,
+      frequency: 0,
+      ctrTrend: [ctr, ctr, ctr, ctr, ctr, ctr, ctr],
+      impressions: 0,
     })
   }
 
