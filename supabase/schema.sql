@@ -38,7 +38,8 @@ alter table clients enable row level security;
 alter table meta_tokens enable row level security;
 alter table snapshots enable row level security;
 
--- Políticas básicas (ajustar cuando agregues auth)
-create policy "clients_own" on clients for all using (true);
-create policy "tokens_own" on meta_tokens for all using (true);
-create policy "snapshots_own" on snapshots for all using (true);
+-- Políticas: acceso solo para service_role (backend). Anon key no puede leer/escribir.
+-- Cuando se agregue Supabase Auth, cambiar a: using (auth.uid() = user_id)
+create policy "clients_deny_anon" on clients for all using (auth.role() = 'service_role');
+create policy "tokens_deny_anon" on meta_tokens for all using (auth.role() = 'service_role');
+create policy "snapshots_deny_anon" on snapshots for all using (auth.role() = 'service_role');

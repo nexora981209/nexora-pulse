@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
 
 export default function MetaCallback() {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
@@ -34,16 +33,9 @@ export default function MetaCallback() {
 
         if (active.length === 0) throw new Error('No se encontraron cuentas publicitarias activas')
 
-        // Save token to Supabase (use first active account)
+        // Use first active account
         const account = active[0]
         setMessage('Guardando conexión...')
-
-        await supabase.from('meta_tokens').upsert({
-          client_id: null,
-          access_token: token,
-          ad_account_id: account.id,
-          account_name: account.name,
-        })
 
         // Store token in sessionStorage for the app to use
         sessionStorage.setItem('metrixa_meta_token', token)
