@@ -3,11 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import MetaCallback from './pages/MetaCallback.tsx'
+import Privacy from './pages/Privacy.tsx'
 
-const isCallback = window.location.pathname === '/meta-callback'
+const path = window.location.pathname
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {isCallback ? <MetaCallback /> : <App />}
+    {path === '/meta-callback' ? <MetaCallback /> : path === '/privacy' ? <Privacy /> : <App />}
   </StrictMode>,
 )
