@@ -42,6 +42,9 @@ export default function MetaCallback() {
         sessionStorage.setItem('metrixa_meta_account_id', account.id)
         sessionStorage.setItem('metrixa_meta_account_name', account.name)
 
+        // Remove token from URL bar so it doesn't stay in browser history
+        window.history.replaceState(null, '', window.location.pathname)
+
         setStatus('success')
         setMessage(`¡Conectado con ${account.name}!`)
 
