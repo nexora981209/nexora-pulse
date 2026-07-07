@@ -94,6 +94,42 @@ export default function ClientView({ metrics, campaigns, isRealData, onUploadCSV
     onDownloaded()
   }
 
+  // Empty state: connected to Meta but no active campaigns
+  if (isRealData && campaigns.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#0a0a10] flex flex-col">
+        <header className="border-b border-white/5 bg-[#0a0a10]/90 backdrop-blur sticky top-0 z-10">
+          <div className="max-w-2xl mx-auto px-5 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">N</div>
+              <p className="text-white font-bold text-sm">Metrixa</p>
+            </div>
+            <button onClick={onAdvancedView} className="text-xs text-gray-500 hover:text-gray-300 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-full transition-colors">
+              Vista avanzada ↗
+            </button>
+          </div>
+        </header>
+        <div className="flex-1 flex items-center justify-center px-5">
+          <div className="max-w-sm w-full text-center space-y-5">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 border border-white/10 flex items-center justify-center text-3xl mx-auto">📭</div>
+            <div>
+              <p className="text-white font-bold text-lg">Cuenta conectada</p>
+              <p className="text-gray-400 text-sm mt-1">No hay campañas activas en los últimos 30 días en tu cuenta de Meta Ads.</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-left space-y-2">
+              <p className="text-gray-300 text-xs font-semibold">¿Qué puedes hacer?</p>
+              <p className="text-gray-500 text-xs">• Activa una campaña en Meta Ads Manager y vuelve a conectar</p>
+              <p className="text-gray-500 text-xs">• O sube un archivo CSV con tus métricas históricas</p>
+            </div>
+            <button onClick={onUploadCSV} className="w-full bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold py-3 rounded-2xl transition-colors">
+              📥 Subir CSV en su lugar
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[#0a0a10]">
       {/* Header */}

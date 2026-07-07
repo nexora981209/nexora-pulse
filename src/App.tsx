@@ -65,7 +65,7 @@ export default function App() {
 
   function handleImport(m: MetricValues, c: Campaign[]) {
     setMetrics(m)
-    if (c.length > 0) setCampaigns(c)
+    setCampaigns(c)
     setIsRealData(true)
     setShowImporter(false)
   }
