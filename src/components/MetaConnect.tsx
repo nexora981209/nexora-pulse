@@ -131,7 +131,7 @@ export default function MetaConnect({ onImport }: Props) {
   function handleOAuth() {
     if (!META_APP_ID) return
     const redirectUri = encodeURIComponent(`${window.location.origin}/meta-callback`)
-    const scope = encodeURIComponent('ads_read,read_insights')
+    const scope = encodeURIComponent('ads_read')
     const url = `https://www.facebook.com/v19.0/dialog/oauth?client_id=${META_APP_ID}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token`
     window.location.href = url
   }
