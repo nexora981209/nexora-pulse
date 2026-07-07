@@ -18,7 +18,7 @@ function downloadCSV(content: string, filename: string) {
 export function exportMetricsCSV(metrics: MetricValues, score: number) {
   const date = new Date().toISOString().split('T')[0]
   const rows: string[][] = [
-    ['Nexora Pulse — Reporte de Métricas Meta Ads'],
+    ['Metrixa — Reporte de Métricas Meta Ads'],
     ['Fecha', date],
     ['Score de Salud', String(score) + '/100'],
     [],
@@ -30,7 +30,7 @@ export function exportMetricsCSV(metrics: MetricValues, score: number) {
     rows.push([m.label, m.format(value), m.idealLabel, m.unit])
   }
 
-  downloadCSV(toCSV(rows), `nexora-pulse-metricas-${date}.csv`)
+  downloadCSV(toCSV(rows), `metrixa-metricas-${date}.csv`)
 }
 
 export function exportCampaignsCSV(campaigns: Campaign[]) {
@@ -53,5 +53,5 @@ export function exportCampaignsCSV(campaigns: Campaign[]) {
     ])
   }
 
-  downloadCSV(toCSV(rows), `nexora-pulse-campanas-${date}.csv`)
+  downloadCSV(toCSV(rows), `metrixa-campanas-${date}.csv`)
 }

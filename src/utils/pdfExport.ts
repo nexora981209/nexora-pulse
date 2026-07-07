@@ -74,7 +74,7 @@ export async function generatePDF(metrics: MetricValues, campaigns: Campaign[], 
   doc.setFontSize(18)
   doc.setFont('helvetica', 'bold')
   setTextColor(doc, TEXT)
-  doc.text('Nexora Pulse', 28, 16)
+  doc.text('Metrixa', 28, 16)
   doc.setFontSize(8)
   doc.setFont('helvetica', 'normal')
   setTextColor(doc, MUTED)
@@ -344,10 +344,10 @@ export async function generatePDF(metrics: MetricValues, campaigns: Campaign[], 
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(6)
     setTextColor(doc, MUTED)
-    doc.text(`Nexora Pulse · ${date} · Página ${i} de ${totalPages}`, 14, 294)
+    doc.text(`Metrixa · ${date} · Página ${i} de ${totalPages}`, 14, 294)
     doc.text('nexora.agency', W - 14, 294, { align: 'right' })
   }
 
-  const filename = `nexora-pulse-reporte-${new Date().toISOString().split('T')[0]}.pdf`
+  const filename = `metrixa-reporte-${new Date().toISOString().split('T')[0]}.pdf`
   doc.save(filename)
 }

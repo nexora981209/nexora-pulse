@@ -101,7 +101,7 @@ export default function ClientView({ metrics, campaigns, isRealData, onUploadCSV
         <div className="max-w-2xl mx-auto px-5 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">N</div>
-            <p className="text-white font-bold text-sm">Nexora Pulse</p>
+            <p className="text-white font-bold text-sm">Metrixa</p>
           </div>
           <div className="flex items-center gap-2">
             {!isRealData && (
@@ -298,7 +298,7 @@ export default function ClientView({ metrics, campaigns, isRealData, onUploadCSV
         </div>
 
         <div className="text-center py-2 text-xs text-gray-600">
-          Nexora Pulse · {new Date().getFullYear()}
+          Metrixa · {new Date().getFullYear()}
         </div>
       </div>
     </div>

@@ -52,7 +52,7 @@ ${warnings.length > 0 ? `\n⚠️ *En seguimiento:*\n${warnings.slice(0, 2).map(
 ✅ *Próximos pasos:*
 ${recommendations.slice(0, 3).map((r, i) => `${i + 1}. ${r.action}`).join('\n')}
 
-_Análisis generado por Nexora Pulse_`
+_Análisis generado por Metrixa_`
 
   const fullText = `📊 *REPORTE COMPLETO DE META ADS — ${period.toUpperCase()}*
 ${agencyName} | Análisis para ${clientName}
@@ -91,7 +91,7 @@ ${critical.length > 0 ? `🚨 *ALERTAS CRÍTICAS (acción inmediata)*\n\n${criti
 ${recommendations.slice(0, 5).map((r, i) => `${i + 1}. *${r.action}*\n   Resultado esperado: ${r.estimatedGain}`).join('\n\n')}
 
 ━━━━━━━━━━━━━━━━━━━━
-_Análisis generado con Nexora Pulse_
+_Análisis generado con Metrixa_
 _${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}_`
 
   const text = mode === 'summary' ? summaryText : fullText

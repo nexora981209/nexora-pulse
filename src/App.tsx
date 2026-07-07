@@ -26,7 +26,7 @@ import WhatsAppReport from './components/WhatsAppReport'
 import Onboarding from './components/Onboarding'
 import ProgressGuide from './components/ProgressGuide'
 
-const ONBOARDING_KEY = 'nexora-pulse-onboarding-done'
+const ONBOARDING_KEY = 'metrixa-onboarding-done'
 
 export default function App() {
   const [metrics, setMetrics] = useState<MetricValues>(CURRENT_METRICS)
@@ -132,7 +132,7 @@ export default function App() {
           <div className="flex items-center gap-3 flex-shrink-0">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">N</div>
             <div>
-              <h1 className="text-white font-bold text-base leading-none">Nexora Pulse</h1>
+              <h1 className="text-white font-bold text-base leading-none">Metrixa</h1>
               <p className="text-gray-500 text-xs mt-0.5">Vista avanzada</p>
             </div>
           </div>
@@ -243,7 +243,7 @@ export default function App() {
         <HistoryPanel entries={history} onLoad={handleLoadSnapshot} onRefresh={refreshHistory} />
 
         <footer className="text-center text-xs text-gray-600 py-4">
-          Nexora Pulse · {isRealData ? 'Datos importados desde Meta Ads' : 'Datos simulados'} · {new Date().getFullYear()}
+          Metrixa · {isRealData ? 'Datos importados desde Meta Ads' : 'Datos simulados'} · {new Date().getFullYear()}
         </footer>
       </main>
     </div>

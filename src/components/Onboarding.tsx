@@ -10,7 +10,7 @@ export default function Onboarding({ onStart }: Props) {
         N
       </div>
 
-      <h1 className="text-3xl font-bold text-white mb-2">Nexora Pulse</h1>
+      <h1 className="text-3xl font-bold text-white mb-2">Metrixa</h1>
       <p className="text-gray-400 text-base mb-10 max-w-sm">
         Analiza tus anuncios de Meta en segundos — sin ser experto en marketing
       </p>

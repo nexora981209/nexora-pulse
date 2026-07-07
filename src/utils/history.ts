@@ -10,7 +10,7 @@ export interface HistoryEntry {
   isRealData: boolean
 }
 
-const STORAGE_KEY = 'nexora-pulse-history'
+const STORAGE_KEY = 'metrixa-history'
 const MAX_ENTRIES = 20
 
 export function saveSnapshot(metrics: MetricValues, campaigns: Campaign[], score: number, isRealData: boolean): HistoryEntry {
