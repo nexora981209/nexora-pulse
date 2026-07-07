@@ -6,14 +6,7 @@ interface Props {
   onImport: (metrics: MetricValues, campaigns: Campaign[]) => void
 }
 
-const META_APP_ID = import.meta.env.VITE_META_APP_ID as string | undefined
 
-function buildOAuthURL() {
-  if (!META_APP_ID) return null
-  const redirectUri = encodeURIComponent(`${window.location.origin}/meta-callback`)
-  const scope = encodeURIComponent('ads_read,read_insights')
-  return `https://www.facebook.com/v19.0/dialog/oauth?client_id=${META_APP_ID}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token`
-}
 
 async function fetchAdAccounts(token: string) {
   const res = await fetch(`https://graph.facebook.com/v19.0/me/adaccounts?fields=id,name,account_status&access_token=${token}`)
@@ -120,7 +113,6 @@ export default function MetaConnect({ onImport }: Props) {
   const [error, setError] = useState('')
   const [loadingMsg, setLoadingMsg] = useState('')
 
-  // const oauthURL = buildOAuthURL() — reserved for future OAuth flow
 
   async function handleTokenSubmit() {
     const t = manualToken.trim()
