@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import type { MetricValues, Campaign } from '../data/mockData'
+
+const META_APP_ID = import.meta.env.VITE_META_APP_ID as string | undefined
 
 interface Props {
   onImport: (metrics: MetricValues, campaigns: Campaign[]) => void
@@ -113,6 +115,28 @@ export default function MetaConnect({ onImport }: Props) {
   const [error, setError] = useState('')
   const [loadingMsg, setLoadingMsg] = useState('')
 
+  // Check if returning from OAuth callback
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('meta_connected') === '1') {
+      const savedToken = sessionStorage.getItem('metrixa_meta_token')
+      const savedAccountId = sessionStorage.getItem('metrixa_meta_account_id')
+      if (savedToken && savedAccountId) {
+        setToken(savedToken)
+        handleSelectAccount(savedAccountId, savedToken)
+        window.history.replaceState({}, '', '/')
+      }
+    }
+  }, [])
+
+  function handleOAuth() {
+    if (!META_APP_ID) return
+    const redirectUri = encodeURIComponent(`${window.location.origin}/meta-callback`)
+    const scope = encodeURIComponent('ads_read,read_insights')
+    const url = `https://www.facebook.com/v19.0/dialog/oauth?client_id=${META_APP_ID}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token`
+    window.location.href = url
+  }
+
 
   async function handleTokenSubmit() {
     const t = manualToken.trim()
@@ -130,11 +154,12 @@ export default function MetaConnect({ onImport }: Props) {
     }
   }
 
-  async function handleSelectAccount(accountId: string) {
+  async function handleSelectAccount(accountId: string, overrideToken?: string) {
     setStep('loading')
     setLoadingMsg('Descargando métricas de los últimos 30 días...')
+    const t = overrideToken ?? token
     try {
-      const rows = await fetchInsights(accountId, token)
+      const rows = await fetchInsights(accountId, t)
       const { metrics, campaigns } = parseInsights(rows)
 
       // Save snapshot to Supabase
@@ -167,36 +192,39 @@ export default function MetaConnect({ onImport }: Props) {
       </div>
 
       {step === 'idle' && (
-        <div className="space-y-4">
-          <div className="bg-[#13141e] rounded-xl p-4 border border-white/5">
-            <p className="text-xs text-gray-400 font-medium mb-3">Cómo obtener tu token de acceso:</p>
-            <ol className="text-xs text-gray-500 space-y-1.5 list-decimal list-inside">
-              <li>Ve a <span className="text-blue-400">developers.facebook.com/tools/explorer</span></li>
-              <li>Selecciona tu app y tu cuenta publicitaria</li>
-              <li>Agrega el permiso <span className="text-white font-mono bg-white/5 px-1 rounded">ads_read</span></li>
-              <li>Clic en <strong className="text-gray-300">"Generate Access Token"</strong></li>
-              <li>Copia el token y pégalo aquí</li>
-            </ol>
+        <div className="space-y-3">
+          {/* OAuth button — preferred */}
+          {META_APP_ID && (
+            <button
+              onClick={handleOAuth}
+              className="w-full bg-[#1877F2] hover:bg-[#166fe5] text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              Conectar con Facebook
+            </button>
+          )}
+
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-white/5" />
+            <span className="text-xs text-gray-600">o con token manual</span>
+            <div className="flex-1 h-px bg-white/5" />
           </div>
 
-          <div>
-            <label className="text-xs text-gray-400 block mb-1.5">Access Token de Meta</label>
-            <div className="flex gap-2">
-              <input
-                type="password"
-                value={manualToken}
-                onChange={e => setManualToken(e.target.value)}
-                placeholder="EAAxxxxx..."
-                className="flex-1 bg-[#13141e] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-blue-500/50"
-              />
-              <button
-                onClick={handleTokenSubmit}
-                disabled={!manualToken.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors"
-              >
-                Conectar
-              </button>
-            </div>
+          <div className="flex gap-2">
+            <input
+              type="password"
+              value={manualToken}
+              onChange={e => setManualToken(e.target.value)}
+              placeholder="EAAxxxxx..."
+              className="flex-1 bg-[#13141e] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-blue-500/50"
+            />
+            <button
+              onClick={handleTokenSubmit}
+              disabled={!manualToken.trim()}
+              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors"
+            >
+              Conectar
+            </button>
           </div>
         </div>
       )}
