@@ -5,30 +5,145 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Política de Privacidad — Metrixa</title>
   <style>
-    body { font-family: -apple-system, sans-serif; max-width: 700px; margin: 60px auto; padding: 0 24px; color: #1a1a2e; line-height: 1.7; }
-    h1 { color: #3B82F6; } h2 { margin-top: 32px; color: #333; }
-    a { color: #3B82F6; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #1f2937; }
+    .container { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; }
+    .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 48px; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #3B82F6, #7C3AED); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px; }
+    .logo-name { font-weight: 700; font-size: 18px; color: #111827; }
+    h1 { font-size: 28px; font-weight: 800; color: #111827; margin-bottom: 8px; }
+    .subtitle { color: #6b7280; font-size: 14px; margin-bottom: 40px; }
+    .card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 32px; margin-bottom: 20px; }
+    h2 { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 12px; display: flex; align-items: center; gap-8px; }
+    h2 .num { background: #EFF6FF; color: #3B82F6; width: 24px; height: 24px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin-right: 10px; }
+    p { color: #4b5563; font-size: 14px; line-height: 1.8; margin-bottom: 10px; }
+    p:last-child { margin-bottom: 0; }
+    ul { color: #4b5563; font-size: 14px; line-height: 1.8; padding-left: 20px; }
+    ul li { margin-bottom: 6px; }
+    .highlight { background: #EFF6FF; border-left: 3px solid #3B82F6; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 13px; color: #1e40af; }
+    .footer { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 40px; }
+    a { color: #3B82F6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+    th { background: #f9fafb; padding: 10px 12px; text-align: left; color: #6b7280; font-weight: 600; border-bottom: 1px solid #e5e7eb; }
+    td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; color: #4b5563; vertical-align: top; }
   </style>
 </head>
 <body>
-  <h1>Política de Privacidad</h1>
-  <p><strong>Metrixa</strong> — Última actualización: julio 2026</p>
+  <div class="container">
+    <div class="logo">
+      <div class="logo-icon">M</div>
+      <span class="logo-name">Metrixa</span>
+    </div>
 
-  <h2>1. Información que recopilamos</h2>
-  <p>Metrixa accede a los datos de tus campañas publicitarias de Meta Ads únicamente cuando tú lo autorizas. Los datos incluyen métricas de rendimiento como CTR, ROAS, CPC y estadísticas de campañas.</p>
+    <h1>Política de Privacidad</h1>
+    <p class="subtitle">Última actualización: 6 de julio de 2026 · Versión 1.0</p>
 
-  <h2>2. Cómo usamos la información</h2>
-  <p>Los datos se usan exclusivamente para generar análisis y recomendaciones dentro de la plataforma. No vendemos ni compartimos tu información con terceros.</p>
+    <div class="card">
+      <h2><span class="num">1</span> ¿Quiénes somos?</h2>
+      <p>Metrixa es una plataforma de análisis de publicidad digital operada por Nexora (jose.ia.marketing), con sede en Colombia. Metrixa permite a los usuarios analizar el rendimiento de sus campañas en Meta Ads (Facebook e Instagram) y obtener recomendaciones automatizadas.</p>
+      <p>Contacto: <a href="mailto:nexora981209@gmail.com">nexora981209@gmail.com</a></p>
+    </div>
 
-  <h2>3. Almacenamiento de datos</h2>
-  <p>Los tokens de acceso se almacenan de forma segura en nuestra base de datos encriptada. Los datos de métricas se procesan en tiempo real y no se almacenan permanentemente.</p>
+    <div class="card">
+      <h2><span class="num">2</span> Qué datos recopilamos</h2>
+      <p>Recopilamos únicamente los datos necesarios para prestar el servicio:</p>
+      <table>
+        <tr><th>Tipo de dato</th><th>Fuente</th><th>Para qué se usa</th></tr>
+        <tr><td>Métricas de campañas (CTR, ROAS, CPC, CPA, frecuencia, etc.)</td><td>Meta Ads API o archivo CSV</td><td>Generar análisis y recomendaciones</td></tr>
+        <tr><td>Nombre de la cuenta publicitaria</td><td>Meta Ads API</td><td>Identificar la cuenta conectada</td></tr>
+        <tr><td>Token de acceso de Meta</td><td>OAuth de Facebook</td><td>Leer métricas en tu nombre</td></tr>
+        <tr><td>Dirección de correo electrónico</td><td>Registro opcional</td><td>Comunicaciones del servicio</td></tr>
+      </table>
+      <div class="highlight">No accedemos a tus publicaciones, mensajes, fotos, lista de amigos ni ningún dato personal de Facebook fuera del alcance de las métricas publicitarias.</div>
+    </div>
 
-  <h2>4. Tus derechos</h2>
-  <p>Puedes revocar el acceso de Metrixa a tu cuenta de Meta Ads en cualquier momento desde la configuración de Facebook. Para eliminar tus datos, escríbenos a <a href="mailto:nexora981209@gmail.com">nexora981209@gmail.com</a>.</p>
+    <div class="card">
+      <h2><span class="num">3</span> Cómo usamos tus datos</h2>
+      <ul>
+        <li>Analizar el rendimiento de tus campañas publicitarias y mostrar resultados en el dashboard.</li>
+        <li>Generar recomendaciones automáticas basadas en métricas.</li>
+        <li>Guardar un historial de análisis para comparar evolución (solo si el usuario lo activa).</li>
+        <li>Mejorar la precisión de los algoritmos de análisis de forma anónima y agregada.</li>
+      </ul>
+      <p style="margin-top:12px;"><strong>No usamos tus datos para:</strong> publicidad, venta a terceros, perfilamiento comercial ni ningún otro fin distinto al servicio.</p>
+    </div>
 
-  <h2>5. Contacto</h2>
-  <p>Para preguntas sobre privacidad: <a href="mailto:nexora981209@gmail.com">nexora981209@gmail.com</a></p>
+    <div class="card">
+      <h2><span class="num">4</span> Compartir información con terceros</h2>
+      <p>Metrixa utiliza los siguientes proveedores de confianza para operar el servicio:</p>
+      <table>
+        <tr><th>Proveedor</th><th>Función</th><th>Política de privacidad</th></tr>
+        <tr><td>Supabase</td><td>Base de datos y almacenamiento seguro</td><td><a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a></td></tr>
+        <tr><td>Vercel</td><td>Hospedaje de la aplicación</td><td><a href="https://vercel.com/legal/privacy-policy" target="_blank">vercel.com/legal/privacy-policy</a></td></tr>
+        <tr><td>Meta (Facebook)</td><td>Autenticación OAuth y datos de Ads</td><td><a href="https://www.facebook.com/privacy/policy" target="_blank">facebook.com/privacy/policy</a></td></tr>
+      </table>
+      <p style="margin-top:12px;">No vendemos, alquilamos ni compartimos tu información con ningún otro tercero.</p>
+    </div>
 
-  <p style="margin-top:48px; color:#999; font-size:13px;">© 2026 Metrixa. Todos los derechos reservados.</p>
+    <div class="card">
+      <h2><span class="num">5</span> Retención de datos</h2>
+      <ul>
+        <li><strong>Tokens de acceso de Meta:</strong> se almacenan mientras la conexión esté activa. Se eliminan al revocar el acceso.</li>
+        <li><strong>Métricas y snapshots:</strong> se conservan hasta 20 entradas por usuario. El usuario puede eliminarlas en cualquier momento.</li>
+        <li><strong>Datos de sesión:</strong> se eliminan al cerrar el navegador (sessionStorage).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">6</span> Tus derechos</h2>
+      <p>De acuerdo con la Ley 1581 de 2012 de Colombia (Protección de Datos Personales) y el RGPD donde aplique, tienes derecho a:</p>
+      <ul>
+        <li><strong>Acceder</strong> a los datos que tenemos sobre ti.</li>
+        <li><strong>Corregir</strong> información incorrecta.</li>
+        <li><strong>Eliminar</strong> tus datos de nuestra plataforma.</li>
+        <li><strong>Revocar</strong> el acceso de Metrixa a tu cuenta de Meta desde <a href="https://www.facebook.com/settings?tab=applications" target="_blank">Configuración de Facebook → Aplicaciones</a>.</li>
+        <li><strong>Portabilidad:</strong> solicitar una copia de tus datos en formato CSV.</li>
+      </ul>
+      <p style="margin-top:12px;">Para ejercer cualquiera de estos derechos escríbenos a <a href="mailto:nexora981209@gmail.com">nexora981209@gmail.com</a>. Respondemos en un plazo máximo de 15 días hábiles.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">7</span> Seguridad</h2>
+      <p>Implementamos medidas técnicas y organizativas para proteger tu información:</p>
+      <ul>
+        <li>Comunicaciones cifradas mediante HTTPS/TLS.</li>
+        <li>Tokens de acceso almacenados con Row Level Security (RLS) en Supabase.</li>
+        <li>Acceso restringido a los datos — solo el usuario autorizado puede ver su información.</li>
+        <li>Sin almacenamiento de contraseñas — autenticación delegada a Meta OAuth.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">8</span> Cookies y almacenamiento local</h2>
+      <p>Metrixa usa <strong>localStorage</strong> y <strong>sessionStorage</strong> del navegador para guardar preferencias y datos temporales de sesión. No usamos cookies de rastreo ni publicidad.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">9</span> Menores de edad</h2>
+      <p>Metrixa está dirigido a profesionales de marketing y empresas. No recopilamos intencionalmente información de menores de 18 años. Si detectamos que un menor ha proporcionado datos, los eliminaremos de inmediato.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">10</span> Cambios a esta política</h2>
+      <p>Podemos actualizar esta política ocasionalmente. Notificaremos cambios significativos por correo electrónico o mediante un aviso en la plataforma. El uso continuado del servicio después de los cambios implica aceptación de la nueva política.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">11</span> Contacto y reclamaciones</h2>
+      <p>Para cualquier consulta sobre privacidad o para ejercer tus derechos:</p>
+      <ul>
+        <li>Email: <a href="mailto:nexora981209@gmail.com">nexora981209@gmail.com</a></li>
+        <li>Operador: Nexora — jose.ia.marketing</li>
+        <li>País: Colombia</li>
+      </ul>
+      <p style="margin-top:12px;">Si no obtienes respuesta satisfactoria, puedes presentar una reclamación ante la <strong>Superintendencia de Industria y Comercio (SIC)</strong> de Colombia en <a href="https://www.sic.gov.co" target="_blank">sic.gov.co</a>.</p>
+    </div>
+
+    <div class="footer">
+      <p>© 2026 Metrixa · Nexora · Colombia</p>
+      <p style="margin-top:6px;">Esta política cumple con la Ley 1581 de 2012 (Colombia) y es compatible con el RGPD (Unión Europea).</p>
+    </div>
+  </div>
 </body>
 </html>
