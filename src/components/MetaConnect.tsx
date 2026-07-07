@@ -120,7 +120,7 @@ export default function MetaConnect({ onImport }: Props) {
   const [error, setError] = useState('')
   const [loadingMsg, setLoadingMsg] = useState('')
 
-  const oauthURL = buildOAuthURL()
+  // const oauthURL = buildOAuthURL() — reserved for future OAuth flow
 
   async function handleTokenSubmit() {
     const t = manualToken.trim()
