@@ -25,6 +25,7 @@ import ScaleCalculator from './components/ScaleCalculator'
 import WhatsAppReport from './components/WhatsAppReport'
 import Onboarding from './components/Onboarding'
 import ProgressGuide from './components/ProgressGuide'
+import MetaConnect from './components/MetaConnect'
 
 const ONBOARDING_KEY = 'metrixa-onboarding-done'
 
@@ -166,6 +167,9 @@ export default function App() {
 
         {/* Progress guide */}
         <ProgressGuide hasData={isRealData} hasViewedAlerts={hasViewedAlerts} hasDownloaded={hasDownloaded} />
+
+        {/* Meta Ads direct connection */}
+        <MetaConnect onImport={handleImport} />
 
         {showImporter && (
           <section>
