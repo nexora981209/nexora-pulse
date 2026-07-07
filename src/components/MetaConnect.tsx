@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
 import type { MetricValues, Campaign } from '../data/mockData'
 
 const META_APP_ID = import.meta.env.VITE_META_APP_ID as string | undefined
@@ -161,16 +160,6 @@ export default function MetaConnect({ onImport }: Props) {
     try {
       const rows = await fetchInsights(accountId, t)
       const { metrics, campaigns } = parseInsights(rows)
-
-      // Save snapshot to Supabase
-      await supabase.from('snapshots').insert({
-        client_id: null,
-        score: 50,
-        metrics,
-        campaigns,
-        is_real_data: true,
-        source: 'meta_api',
-      })
 
       setStep('done')
       onImport(metrics, campaigns)
