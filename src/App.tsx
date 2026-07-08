@@ -121,49 +121,75 @@ export default function App() {
 
   // Advanced / technical dashboard
   return (
-    <div className="min-h-screen bg-[#0f0f14]">
+    <div className="min-h-screen bg-[#08080f]">
       {savedToast && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white text-xs font-medium px-4 py-2 rounded-full shadow-xl">
-          ✓ Snapshot guardado en el historial
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-2xl">
+          Snapshot guardado
         </div>
       )}
 
-      <header className="border-b border-white/5 bg-[#0f0f14]/80 backdrop-blur sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">N</div>
+      <header className="border-b border-white/[0.06] bg-[#08080f]/80 backdrop-blur-xl sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 flex-shrink-0">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <rect width="22" height="22" rx="6" fill="#6366f1"/>
+              <path d="M5 16L8.5 7L11 13L13.5 9L17 16" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
             <div>
-              <h1 className="text-white font-bold text-base leading-none">Metrixa</h1>
-              <p className="text-gray-500 text-xs mt-0.5">Vista avanzada</p>
+              <h1 className="text-white font-semibold text-sm leading-none tracking-tight">Metrixa</h1>
+              <p className="text-slate-600 text-[10px] mt-0.5">Vista avanzada</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap justify-end">
+          <div className="flex items-center gap-1.5 flex-wrap justify-end">
             {isRealData
-              ? <span className="text-xs text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 rounded-full font-medium">📊 Datos reales</span>
-              : <span className="text-xs text-gray-500 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">🧪 Demo</span>
+              ? <span className="text-[10px] text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-lg font-medium">Datos reales</span>
+              : <span className="text-[10px] text-slate-500 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/[0.06]">Demo</span>
             }
-            <button onClick={() => setShowImporter(v => !v)} className="text-xs bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-full font-medium transition-colors">⬆ Importar CSV</button>
+            <button onClick={() => setShowImporter(v => !v)}
+              className="text-xs bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-lg font-medium transition-colors">
+              Importar CSV
+            </button>
             <div className="relative">
-              <button onClick={e => { e.stopPropagation(); setShowExportMenu(v => !v) }} className="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-full font-medium transition-colors">⬇ Exportar CSV</button>
+              <button onClick={e => { e.stopPropagation(); setShowExportMenu(v => !v) }}
+                className="text-xs text-slate-300 hover:text-white border border-white/[0.08] hover:border-white/20 bg-white/[0.03] px-3 py-1.5 rounded-lg font-medium transition-colors">
+                Exportar CSV
+              </button>
               {showExportMenu && (
-                <div className="absolute right-0 top-10 bg-[#1a1b25] border border-white/10 rounded-xl shadow-2xl py-1.5 w-48 z-20">
-                  <button onClick={() => { exportMetricsCSV(metrics, healthScore); setShowExportMenu(false) }} className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/5 transition-colors">📈 Métricas KPI</button>
-                  <button onClick={() => { exportCampaignsCSV(campaigns); setShowExportMenu(false) }} className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/5 transition-colors">📋 Tabla de campañas</button>
-                  <button onClick={() => { exportMetricsCSV(metrics, healthScore); setTimeout(() => exportCampaignsCSV(campaigns), 300); setShowExportMenu(false) }} className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/5 transition-colors border-t border-white/5 mt-1">📦 Todo junto</button>
+                <div className="absolute right-0 top-9 bg-[#13131f] border border-white/10 rounded-xl shadow-2xl py-1.5 w-44 z-20">
+                  <button onClick={() => { exportMetricsCSV(metrics, healthScore); setShowExportMenu(false) }}
+                    className="w-full text-left px-3.5 py-2 text-xs text-slate-300 hover:bg-white/[0.04] transition-colors">
+                    Métricas KPI
+                  </button>
+                  <button onClick={() => { exportCampaignsCSV(campaigns); setShowExportMenu(false) }}
+                    className="w-full text-left px-3.5 py-2 text-xs text-slate-300 hover:bg-white/[0.04] transition-colors">
+                    Tabla de campañas
+                  </button>
+                  <div className="h-px bg-white/[0.05] mx-2 my-1" />
+                  <button onClick={() => { exportMetricsCSV(metrics, healthScore); setTimeout(() => exportCampaignsCSV(campaigns), 300); setShowExportMenu(false) }}
+                    className="w-full text-left px-3.5 py-2 text-xs text-slate-300 hover:bg-white/[0.04] transition-colors">
+                    Todo junto
+                  </button>
                 </div>
               )}
             </div>
-            <button onClick={handlePDF} disabled={pdfLoading} className="text-xs bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-3 py-1.5 rounded-full font-medium transition-all disabled:opacity-60">
-              {pdfLoading ? '⏳ Generando...' : '📄 PDF'}
+            <button onClick={handlePDF} disabled={pdfLoading}
+              className="text-xs text-slate-300 hover:text-white border border-white/[0.08] hover:border-white/20 bg-white/[0.03] px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40">
+              {pdfLoading ? 'Generando...' : 'PDF'}
             </button>
-            <button onClick={handleSaveSnapshot} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 px-3 py-1.5 rounded-full font-medium transition-colors">💾 Snapshot</button>
-            <button onClick={() => setShowAdvanced(false)} className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-full font-medium transition-colors">← Vista cliente</button>
+            <button onClick={handleSaveSnapshot}
+              className="text-xs text-slate-400 hover:text-white border border-white/[0.08] hover:border-white/20 bg-white/[0.03] px-3 py-1.5 rounded-lg transition-colors">
+              Snapshot
+            </button>
+            <button onClick={() => setShowAdvanced(false)}
+              className="text-xs text-slate-400 hover:text-slate-200 transition-colors pl-1">
+              ← Cliente
+            </button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8" onClick={() => setShowExportMenu(false)}>
+      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8" onClick={() => { if (showExportMenu) setShowExportMenu(false) }}>
 
         {/* Progress guide */}
         <ProgressGuide hasData={isRealData} hasViewedAlerts={hasViewedAlerts} hasDownloaded={hasDownloaded} />
