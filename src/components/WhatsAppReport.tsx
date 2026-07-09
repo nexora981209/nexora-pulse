@@ -217,8 +217,11 @@ export default function WhatsAppReport({ metrics, campaigns, clientName: initial
   const [clientName, setClientName] = useState(initialName)
   const [agencyName, setAgencyName] = useState('Nexora')
   const [period, setPeriod] = useState('julio 2025')
+  const [clientPhone, setClientPhone] = useState('')
   const [selectedTemplate, setSelectedTemplate] = useState<string>('weekly_summary')
   const [copied, setCopied] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [sendResult, setSendResult] = useState<{ ok: boolean; msg: string } | null>(null)
   const [activeTab, setActiveTab] = useState<'templates' | 'custom'>('templates')
 
   const score = calculateHealthScore(metrics)
@@ -258,6 +261,33 @@ export default function WhatsAppReport({ metrics, campaigns, clientName: initial
     navigator.clipboard.writeText(textToCopy)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  async function handleSend() {
+    const clean = clientPhone.replace(/\D/g, '')
+    if (clean.length < 8) {
+      setSendResult({ ok: false, msg: 'Ingresa un número válido con código de país (ej: 573001234567)' })
+      return
+    }
+    setSending(true)
+    setSendResult(null)
+    try {
+      const res = await fetch('/api/send-whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ number: clean, text: textToCopy }),
+      })
+      const data = await res.json() as { success: boolean; error?: string }
+      if (data.success) {
+        setSendResult({ ok: true, msg: `Enviado a ${clientPhone}` })
+      } else {
+        setSendResult({ ok: false, msg: data.error ?? 'Error al enviar' })
+      }
+    } catch (err) {
+      setSendResult({ ok: false, msg: String(err) })
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -338,6 +368,40 @@ export default function WhatsAppReport({ metrics, campaigns, clientName: initial
             <input value={period} onChange={e => setPeriod(e.target.value)}
               className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-500/50 placeholder-slate-700"
               placeholder="Ej: julio 2025" />
+          </div>
+
+          {/* Phone number for direct send */}
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-[11px] text-slate-500 font-medium">Número del cliente</label>
+              <span className="text-[10px] text-slate-600">Con código de país</span>
+            </div>
+            <div className="flex gap-2">
+              <input value={clientPhone} onChange={e => { setClientPhone(e.target.value); setSendResult(null) }}
+                className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500/50 placeholder-slate-700 font-mono"
+                placeholder="573001234567" type="tel" />
+              <button
+                onClick={handleSend}
+                disabled={sending || !clientPhone.trim()}
+                className="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-colors flex items-center gap-1.5 flex-shrink-0"
+              >
+                {sending ? (
+                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M2 7l10-5-5 10V7H2z"/></svg>
+                )}
+                {sending ? 'Enviando...' : 'Enviar'}
+              </button>
+            </div>
+            {sendResult && (
+              <div className={`mt-2 px-3 py-2 rounded-lg text-[11px] font-medium ${
+                sendResult.ok
+                  ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
+                  : 'bg-red-500/10 border border-red-500/20 text-red-400'
+              }`}>
+                {sendResult.ok ? '✓ ' : '✗ '}{sendResult.msg}
+              </div>
+            )}
           </div>
 
           {activeTab === 'templates' ? (
