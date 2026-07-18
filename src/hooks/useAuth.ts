@@ -16,11 +16,22 @@ export function useAuth(): AuthState & { signOut: () => Promise<void> } {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null)
-      if (data.session?.user) fetchPlan(data.session.user.id)
-      else setLoading(false)
-    })
+    // Handle email confirmation / OAuth callback tokens in URL hash
+    if (window.location.hash.includes('access_token')) {
+      supabase.auth.getSession().then(({ data }) => {
+        if (data.session) {
+          setUser(data.session.user)
+          fetchPlan(data.session.user.id)
+          window.history.replaceState(null, '', window.location.pathname)
+        } else setLoading(false)
+      })
+    } else {
+      supabase.auth.getSession().then(({ data }) => {
+        setUser(data.session?.user ?? null)
+        if (data.session?.user) fetchPlan(data.session.user.id)
+        else setLoading(false)
+      })
+    }
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
