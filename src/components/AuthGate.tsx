@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import Login from '../pages/Login'
+import Paywall from './Paywall'
 
 interface Props { children: ReactNode }
 
 export default function AuthGate({ children }: Props) {
-  const { user, loading } = useAuth()
+  const { user, plan, loading } = useAuth()
 
   if (loading) {
     return (
@@ -23,6 +24,9 @@ export default function AuthGate({ children }: Props) {
   }
 
   if (!user) return <Login />
+
+  // Free plan = must pay before accessing the dashboard
+  if (plan === 'free') return <Paywall userEmail={user.email ?? ''} />
 
   return <>{children}</>
 }
