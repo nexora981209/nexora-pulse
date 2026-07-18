@@ -6,20 +6,23 @@ const PLANS = [
     id: 'starter',
     name: 'Starter',
     price: '$ 19 USD / mes',
-    features: ['1 cuenta de Meta Ads', 'Reportes semanales', 'Envío WhatsApp a clientes', 'Dashboard completo'],
+    features: ['1 Ad Account de Meta', 'Reportes semanales', 'Envío WhatsApp a clientes', 'Dashboard completo'],
+    note: 'Ideal si solo manejas tus propias campañas',
   },
   {
     id: 'pro',
     name: 'Pro',
     price: '$ 49 USD / mes',
-    features: ['Hasta 5 cuentas Meta Ads', 'Todo lo de Starter', 'Análisis con IA', 'Exportar PDF'],
+    features: ['Hasta 5 Ad Accounts', 'Cambio entre cuentas en 1 clic', 'Todo lo de Starter', 'Exportar PDF'],
     highlight: true,
+    note: 'Para freelancers que manejan varios clientes',
   },
   {
     id: 'agency',
     name: 'Agencia',
     price: '$ 99 USD / mes',
-    features: ['Cuentas ilimitadas', 'Todo lo de Pro', 'Vista de cliente personalizada', 'Soporte prioritario'],
+    features: ['Ad Accounts ilimitados', 'Vista personalizada por cliente', 'Todo lo de Pro', 'Soporte prioritario'],
+    note: 'Para agencias con cartera amplia de clientes',
   },
 ]
 
@@ -85,8 +88,11 @@ export default function Paywall({ userEmail }: { userEmail: string }) {
         <h1 className="text-white text-[28px] font-bold leading-tight mb-2">
           Activa tu cuenta
         </h1>
-        <p className="text-white/40 text-[15px] mb-10">
+        <p className="text-white/40 text-[15px] mb-3">
           Paga por Nequi y en menos de 24 horas activamos tu acceso.
+        </p>
+        <p className="text-white/20 text-[12px] mb-10 bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 inline-block">
+          Un <strong className="text-white/40">Ad Account</strong> = una cuenta publicitaria de Meta (cada cliente tuyo tiene la suya)
         </p>
 
         {/* Plan cards */}
@@ -120,6 +126,11 @@ export default function Paywall({ userEmail }: { userEmail: string }) {
                   </li>
                 ))}
               </ul>
+              {'note' in plan && (
+                <p className="text-[11px] text-white/20 mt-3 pt-3 border-t border-white/[0.05] leading-relaxed">
+                  {plan.note}
+                </p>
+              )}
             </button>
           ))}
         </div>
