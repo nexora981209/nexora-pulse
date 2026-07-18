@@ -132,7 +132,7 @@ export default function Paywall({ userEmail }: { userEmail: string }) {
               <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 text-[12px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
               <div>
                 <p className="text-white/70 text-[13px]">Envía el pago por <strong className="text-white">Nequi</strong></p>
-                <p className="text-white/40 text-[12px] mt-0.5">Número: <span className="text-white/70 font-mono">3204388982</span></p>
+                <p className="text-white/40 text-[12px] mt-0.5">Número: <span className="text-white/70 font-mono">3012169424</span></p>
               </div>
             </div>
             <div className="flex items-start gap-3">
