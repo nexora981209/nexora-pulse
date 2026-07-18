@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { supabase } from '../lib/supabase'
 import type { MetricValues, Campaign } from '../data/mockData'
 import { calculateHealthScore, generateDiagnosis } from '../utils/scoring'
 import { generateRecommendations } from '../utils/recommendations'
@@ -272,9 +273,13 @@ export default function WhatsAppReport({ metrics, campaigns, clientName: initial
     setSending(true)
     setSendResult(null)
     try {
+      const { data: { session } } = await supabase.auth.getSession()
       const res = await fetch('/api/send-whatsapp', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token ?? ''}`,
+        },
         body: JSON.stringify({ number: clean, text: textToCopy }),
       })
       const data = await res.json() as { success: boolean; error?: string }

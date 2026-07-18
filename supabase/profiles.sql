@@ -22,9 +22,33 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
--- RLS: solo el propio usuario puede ver/editar su perfil
+-- RLS
 alter table public.profiles enable row level security;
 
-drop policy if exists "profiles_own" on public.profiles;
-create policy "profiles_own" on public.profiles
-  for all using (auth.uid() = id);
+-- Usuarios pueden leer su propio perfil
+drop policy if exists "profiles_select_own" on public.profiles;
+create policy "profiles_select_own" on public.profiles
+  for select using (auth.uid() = id);
+
+-- Usuarios solo pueden actualizar email (NO plan)
+drop policy if exists "profiles_update_own" on public.profiles;
+create policy "profiles_update_own" on public.profiles
+  for update using (auth.uid() = id)
+  with check (
+    auth.uid() = id
+    and plan = (select plan from public.profiles where id = auth.uid())
+  );
+
+-- Solo admin puede leer todos los perfiles
+drop policy if exists "profiles_admin_select" on public.profiles;
+create policy "profiles_admin_select" on public.profiles
+  for select using (
+    auth.jwt() ->> 'email' = 'nexora981209@gmail.com'
+  );
+
+-- Solo admin puede actualizar el plan de cualquier usuario
+drop policy if exists "profiles_admin_update" on public.profiles;
+create policy "profiles_admin_update" on public.profiles
+  for update using (
+    auth.jwt() ->> 'email' = 'nexora981209@gmail.com'
+  );
