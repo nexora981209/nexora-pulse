@@ -26,10 +26,12 @@ import WhatsAppReport from './components/WhatsAppReport'
 import Onboarding from './components/Onboarding'
 import ProgressGuide from './components/ProgressGuide'
 import MetaConnect from './components/MetaConnect'
+import { useAuth } from './hooks/useAuth'
 
 const ONBOARDING_KEY = 'metrixa-onboarding-done'
 
 export default function App() {
+  const { user, plan, signOut } = useAuth()
   const [metrics, setMetrics] = useState<MetricValues>(CURRENT_METRICS)
   const [campaigns, setCampaigns] = useState<Campaign[]>(CAMPAIGNS)
   const [isRealData, setIsRealData] = useState(false)
@@ -185,6 +187,16 @@ export default function App() {
               className="text-xs text-slate-400 hover:text-slate-200 transition-colors pl-1">
               ← Cliente
             </button>
+            <div className="w-px h-4 bg-white/[0.08]" />
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">
+                {user?.email?.[0]?.toUpperCase() ?? 'U'}
+              </div>
+              <span className="text-[10px] text-slate-600 hidden sm:block">{plan}</span>
+              <button onClick={signOut} className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors">
+                Salir
+              </button>
+            </div>
           </div>
         </div>
       </header>
